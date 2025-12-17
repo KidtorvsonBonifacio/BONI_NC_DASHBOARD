@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <title> Login Page</title>
+</head>
+
+<body>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Create Account</h1>
+                <span>Use your email to register</span>
+                    <input type="text" placeholder="Full Name" id="signup-fullname" name="fullName">
+                <input id="signup-email" name="email" type="email" placeholder="Email Address">
+                <input id="signup-password" name="password" type="password" placeholder="Password">
+                    <div id="signup-pw-strength" class="pw-strength"></div>
+                    <div class="field-row">
+                        <label for="signup-role">Role</label>
+                        <select id="signup-role" name="role">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <input type="text" placeholder="Admin Key (only for admin)" id="signup-adminkey" name="adminKey" class="admin-key">
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form>
+                <h1>Sign In</h1>
+                <span>Use your registered email and password</span>
+                <input name="email" type="email" placeholder="Email Address">
+                <input name="password" type="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to access the NC Assessment Dashboard</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello!</h1>
+                    <p>Create an account to access NC Assessment Dashboard</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>
