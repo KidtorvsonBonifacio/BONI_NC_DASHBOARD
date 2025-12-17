@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NC Assessment</title>
+  <link rel="stylesheet" href="index.css" />
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <!-- Left logo + title header. Arrow toggle is positioned to the right of this header. -->
+    <div class="sidebar-header">
+      <!-- Logo image from folder -->
+      <img id="sidebar-logo-left" class="sidebar-logo-left" src="images.jpg"  />
+      <div class="sidebar-title">NC Dashboard</div>
+    </div>
+    <div id="sidebar-toggle" class="toggle-btn" aria-label="Toggle sidebar">
+      <i class="fas fa-chevron-left toggle-arrow"></i>
+    </div>
+    <ul class="menu">
+     
+      <li class="nav-btn" data-page="introduction">
+  <i class="fa-solid fa-house icon"></i><span class="text">Home</span>
+</li>
+
+
+      <li class="nav-btn" data-page="combined"><i class="fa-solid fa-chart-column icon"></i><span class="text">Dashboard</span></li>
+
+      <li class="nav-btn" data-page="about"><i class="fa-solid fa-info-circle icon"></i><span class="text">About</span></li>
+      <li class="nav-btn" data-page="settings"><i class="fa-solid fa-gear icon"></i><span class="text">Settings</span></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="content">
+
+
+    <!-- INTRODUCTION PAGE -->
+    <section id="introduction-page" class="page" style="display: none;">
+    <h1>Welcome to the Dashboard</h1>
+    <p>This is the introduction page. You can place instructions, summaries, or announcements here.</p>
+    
+    <div class="intro-box">
+        <h2>What this Dashboard Does</h2>
+        <p>bout</span></li>
+      <li class="nav-btn" data-page="settings"><i class="fa-solid fa-gear icon"></i><span 
+           This system helps visualize and analyze NC assessment data, 
+           compare performance, and easily navigate between different modules.
+        </p>
+    </div>
+</section>
+  <section id="page-introduction" class="page">
+    <div class="page-header">
+      <h2><i class="fas fa-home"></i> NC Assessment Dashboard</h2>
+      <p>Your tool for viewing, checking, and managing NC assessment results.</p>
+    </div>
+
+    <!-- Hero area removed per user request (no image) -->
+
+    <!-- Welcome box (friendly, a bit longer) -->
+    <div class="welcome-box">
+      <h3>Welcome</h3>
+      <p>
+        Welcome to the NC Assessment Dashboard. Explore charts and assessment results here.
+      </p>
+    </div>
+
+    <!-- Compact feature list (viewer-focused) -->
+    <div class="feature-grid">
+      <div class="feature-box">
+        <h4>View Reports &amp; Charts</h4>
+        <p>Explore charts and summary statistics to understand assessment performance across programs and years.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Search &amp; Filters</h4>
+        <p>Use the filters and search box to find participants, qualifications, and assessment centers quickly.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Record Details</h4>
+        <p>View participant records and NC details.</p>
+      </div>
+
+    </div>
+
+    <!-- Last data update (will be set by JS on load/upload) -->
+    <div class="last-update-box">
+      <strong>Last Data Update:</strong>
+      <span id="lastUpdateTime">Never</span>
+    </div>
+
+  </section>
+
+
+<!-- COMBINED ASSESSMENT PAGE -->
+<section id="page-combined" class="page">
+
+  <!-- TOP NAVIGATION TABS (Centered & Enlarged) -->
+  <nav class="nav-tabs centered-tabs">
+    <button class="tab-btn active" data-tab="page-overview">Overview</button>
+    <button class="tab-btn" data-tab="tab-nc">NC Assessment</button>
+    </nav>
+
+
+
+  <!-- ============= OVERVIEW PAGE (FINAL) ============= -->
+  <div class="tab-content active-tab" id="page-overview">
+    <div class="frame-top">
+      <div class="page-header">
+        <h2><i class="fas fa-chart-line"></i> NC Assessment Dashboard — Overview</h2>
+        <p>Summary of NC assessment results for all programs</p>
+      </div>
+
+      <div class="top-row" style="justify-content:space-between; align-items:center;">
+        <div class="controls-left">
+          <!-- Upload, Download Template, and My Files removed for viewer role -->
+        </div>
+
+        <!-- Right controls: Filter toggle only -->
+        <div class="controls-right">
+          <div class="filter-box" style="min-width:320px; display:flex; gap:16px; flex-wrap:nowrap;">
+            <label style="font-size:12px; color:#555; display:flex; align-items:center; gap:6px; margin:0; white-space:nowrap;">Year
+              <select id="filterYearOverview" style="padding:6px 8px; border-radius:4px; border:1px solid #ddd; width:auto; background:#fff; height:32px;">
+                <option value="">All</option>
+              </select>
+            </label>
+            <label style="font-size:12px; color:#555; display:flex; align-items:center; gap:6px; margin:0; white-space:nowrap;">Qualification
+              <select id="filterQualOverview" style="padding:6px 8px; border-radius:4px; border:1px solid #ddd; width:auto; background:#fff; height:32px;">
+                <option value="">All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Summary Cards -->
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon"><i class="fas fa-users"></i></div>
+          <small>Candidates</small>
+          <b id="overviewCandidates">0</b>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fas fa-check"></i></div>
+          <small>Assessed</small>
+          <b id="overviewAssessed">0</b>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fas fa-certificate"></i></div>
+          <small>Certified</small>
+          <b id="overviewCertified">0</b>
+        </div>
+      </div>
+
+      <!-- Charts Row 1 -->
+      <div class="chart-container">
+        <!-- Certified per Qualification (with year toggle) -->
+        <div class="chart-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3>Certified Students per Qualification</h3>
+          </div>
+          <canvas id="certifiedPerQualChart"></canvas>
+        </div>
+
+        <!-- Gender Distribution (with filters) -->
+        <div class="chart-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3>Gender Distribution</h3>
+          </div>
+          <canvas id="genderDistributionChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Triple Bar Chart (Trend per Year) with scroll support  --> 
+      <div class="chart-container trend-chart">
+        <div class="chart-box" style="min-height:400px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3>Trend per Year (Candidates, Assessed, Certified)</h3>
+          </div>
+          <canvas id="trendPerYearChart" style="max-height:350px;"></canvas>
+        </div>
+      </div> 
+    </div>
+  </div> 
+  
+  <!-- ============= NC ASSESSMENT PAGE (FINAL) ============= -->
+  <div class="tab-content" id="tab-nc">
+    <div class="frame-top">
+      <div class="page-header">
+        <h2><i class="fas fa-certificate"></i> NC Holders Dashboard</h2>
+        <p>Only Certified Students are displayed.</p>
+      </div>
+
+      <!-- Top row: Upload/Download (left) and Search/Filter (right) -->
+      <div class="top-row" style="justify-content:space-between; align-items:center;">
+        <div class="controls-left">
+          <!-- Upload, Download Template, and My Files removed for viewer role -->
+        </div>
+
+        <div class="controls-right">
+          <input type="text" id="searchNC" placeholder="🔍 Search by Name, Gender, Qual, Center, Date..." style="padding:6px 8px; border:1px solid #ddd; border-radius:6px; font-size:13px; min-width:200px; height:32px;" />
+          <div class="filter-box" style="min-width:320px; margin-left:12px; display:flex; gap:16px; flex-wrap:nowrap;">
+            <label style="font-size:12px; color:#555; display:flex; align-items:center; gap:6px; margin:0; white-space:nowrap;">Year
+              <select id="filterYearNC" style="padding:6px 8px; border-radius:4px; border:1px solid #ddd; width:auto; background:#fff; height:32px;">
+                <option value="">All</option>
+              </select>
+            </label>
+            <label style="font-size:12px; color:#555; display:flex; align-items:center; gap:6px; margin:0; white-space:nowrap;">Qualification
+              <select id="filterQualNC" style="padding:6px 8px; border-radius:4px; border:1px solid #ddd; width:auto; background:#fff; height:32px;">
+                <option value="">All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- NC Holders Results (Collapsible by Qualification) -->
+      <div class="results-panel">
+        <h3><i class="fas fa-certificate"></i> Assessment Results</h3>
+        <div id="ncTableBody" style="margin-top:15px;">
+          <p class="empty-note">No data loaded. Contact an administrator to upload files.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- ABOUT PAGE -->
+    <section id="page-about" class="page">
+      <div class="page-header">
+        <h2><i class="fas fa-info-circle"></i> About</h2>
+        <p>Information about this dashboard</p>
+      </div>
+      <div class="info-box">
+        <h3>About NC & BPP Assessment Dashboard</h3>
+        <p>This dashboard is designed to manage and visualize National Certificate (NC) and Basic Professional Program (BPP) assessment results.</p>
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Created:</strong> 2025</p>
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="page-settings" class="page">
+      <div class="page-header">
+        <h2><i class="fas fa-cog"></i> Settings</h2>
+        <p>Configure dashboard settings</p>
+      </div>
+      <div class="info-box">
+        <h3>Dashboard Settings</h3>
+        <p>Settings feature coming soon...</p>
+      </div>
+    </section>
+
+    <!-- Developer docs removed for viewer role -->
+
+  </main>
+
+  <!-- HELP MODAL removed for viewer role -->
+
+  <!-- Developer docs removed for viewer role -->
+
+  <!-- My Files modal removed for viewer role -->
+
+  <script src="index.js"></script>
+</body>
+</html>
